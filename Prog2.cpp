@@ -6,6 +6,7 @@
 int main() {
   std::fstream fin("file.txt", std::fstream::in);
   std::fstream buffer("file.txt", std::fstream::in);  // buffer looks ahead
+  std::fstream fout("clean.txt", std::fstream::out);
   std::vector<std::string> lexeme{};                  // vector of all lexemes scanned
 
   char state{};
@@ -56,6 +57,7 @@ int main() {
         if (word != "") {
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
         break;
@@ -65,11 +67,13 @@ int main() {
         if (word != "") {
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
         word += ch;
         lexeme.push_back(word);
         std::cout << word << ' ';
+        fout << word << " ";
         word = "";
         break;
 
@@ -83,13 +87,16 @@ int main() {
         if (word != "") {
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
         word += ch;
         lexeme.push_back(word);
         std::cout << word << ' ';
+        fout << word << " ";
         word = "";
         std::cout << '\n';
+        fout << '\n';
         break;
 
       //action
@@ -97,12 +104,14 @@ int main() {
         if (word != "") {
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
         if (buffchar != '/') {
           word += ch;
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
 
@@ -123,11 +132,9 @@ int main() {
         if (word != "") {
           lexeme.push_back(word);
           std::cout << word << ' ';
+          fout << word << " ";
           word = "";
         }
-        word += ch;
-        lexeme.push_back(word);
-        word = "";
         while(fin.get(ch)) {
           buffer.get(buffchar);
           if (buffchar != '\n') {
